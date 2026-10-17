@@ -1,0 +1,8 @@
+{
+  "roles": {
+    "plan":   { "provider": "command", "command": ["claude", "-p", "--output-format", "json"], "model": "claude-opus", "pricing": { "inputPerM": 15, "outputPerM": 75 }, "maxOutputTokens": 4000 },
+    "build":  { "provider": "host", "model": "host" },
+    "review": { "provider": "command", "command": ["codex", "exec", "-"], "model": "codex-default", "pricing": { "inputPerM": 1.25, "outputPerM": 10 }, "maxOutputTokens": 4000 }
+  },
+  "budgets": { "perRun": { "usd": 1.5, "tokens": 300000 }, "perDay": { "usd": 8, "tokens": 1500000 } }
+}
