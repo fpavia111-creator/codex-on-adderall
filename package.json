@@ -1,0 +1,55 @@
+{
+  "name": "@kurtfrancisco/codex-on-adderall",
+  "version": "0.1.0",
+  "description": "Plan -> build -> review across models, as a zero-dependency MCP server for Claude Code, Cursor and Codex: spec gate before handoff, tool vetting, per-run and per-day cost/token hard stops, safe defaults, clear logs. Based on Codex on Crack by Ethan Rogers; not affiliated.",
+  "license": "MIT",
+  "author": "Kurt Francisco <Fpavia111@gmail.com>",
+  "contributors": [
+    "Ethan Rogers (original Codex on Crack project)"
+  ],
+  "bin": {
+    "coa": "bin/coa.js"
+  },
+  "main": "src/index.js",
+  "files": [
+    "bin/",
+    "src/",
+    "examples/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/",
+    "test:integration": "node --test test/integration.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/codex-on-adderall.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/codex-on-adderall/issues"
+  },
+  "homepage": "https://github.com/fpavia111-creator/codex-on-adderall#readme",
+  "keywords": [
+    "mcp",
+    "claude-code",
+    "cursor",
+    "codex",
+    "orchestration",
+    "multi-model",
+    "agents",
+    "budget",
+    "spec"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@kurtfrancisco/specgate": "^0.3.0",
+    "@kurtfrancisco/mcpscan": "^0.1.0",
+    "@kurtfrancisco/agent-guard": "^0.1.0"
+  }
+}
