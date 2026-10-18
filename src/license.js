@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Offline license-key verification for Codex on Adderall Pro (Ed25519, SKS2 scheme).
- * Same scheme and public key as leadwright Pro, skill-shipper Pro and agent-guard Pro; distinct product id.
+ * Same scheme and public key as Leonidas of the Web Pro, Hephaestus of Skills Pro and Talos of Humans Pro; distinct product id.
  *
  * Key format:  SKS2-<base64url(payload JSON)>.<base64url(64-byte Ed25519 signature)>
  * Payload:     {"d":"YYYY-MM-DD","eh":<email hash>,"oid":<order id>,"p":"codex-on-adderall-pro","v":2}

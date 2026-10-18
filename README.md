@@ -10,8 +10,8 @@ Codex on Crack showed that one agent planning, another implementing, and a lead 
 | | |
 |---|---|
 | **Any host** | One MCP server for Claude Code, Cursor and Codex. Each role (plan/build/review) is served by `host` (your current agent does it, at no extra cost), `command` (a local CLI such as `claude -p`, `codex exec`, `ollama run`), or `mock`. |
-| **Spec gate** | No handoff until the spec has a goal, acceptance criteria as a checklist, scope, a test plan and named files. Vague items and TBDs lose points. Uses `@kurtfrancisco/specgate` too when it's installed. |
-| **Tool vetting** | Worker tools are checked for prompt injection, hidden tags, credential paths, invisible unicode and exfiltration URLs. Uses `@kurtfrancisco/mcpscan` too when installed. Blocked tools are left out of the build brief. |
+| **Spec gate** | No handoff until the spec has a goal, acceptance criteria as a checklist, scope, a test plan and named files. Vague items and TBDs lose points. Uses `@kurtfrancisco/janus` (Janus of Agents) too when it's installed. |
+| **Tool vetting** | Worker tools are checked for prompt injection, hidden tags, credential paths, invisible unicode and exfiltration URLs. Uses `@kurtfrancisco/argus` (Argus of MCP) too when installed. Blocked tools are left out of the build brief. |
 | **Hard budgets** | USD and token limits per run and per day. A preflight estimate stops a call *before* it would cross a limit, and actual usage is checked after every step. A stopped run says which limit it hit and how to raise it. |
 | **Safe defaults** | The server never edits files, runs git, or deletes anything. CLI workers must be on an allowlist, run without a shell, and are refused for destructive patterns (`rm -rf`, force-push, `npm publish`, `--dangerously-skip-permissions`...). Uses `@kurtfrancisco/agent-guard` policy too when installed. |
 | **Clear logs** | `.coa/runs/<id>/log.jsonl` plus `coa log` for people to read. Secrets are redacted. Every step records model, tokens and cost, and whether the counts were reported or estimated. |
@@ -63,10 +63,10 @@ See `examples/coa.config.claude-codex.json`. The defaults:
 `pricing` (`inputPerM`/`outputPerM` in USD) is per role and is yours to set. Costs are only as accurate as the prices you enter. When a CLI prints JSON usage (`input_tokens`/`output_tokens`) those counts are used; otherwise tokens are estimated at about 4 characters each and marked `estimated`. Set any integration to `"required"` to fail closed when it's missing.
 
 ## Integrations (optional, loaded only if installed)
-`npm i -D @kurtfrancisco/specgate @kurtfrancisco/mcpscan @kurtfrancisco/agent-guard`
-- **SpecGate**: pass a change id (`coa_start_run { specgateChange }` or `coa run spec.md --specgate-change add-x`). The run is blocked unless `specgate validate <id>` and `specgate status <id>` both exit 0, meaning the spec is well formed and a human has signed it off. Called through its CLI (no shell, no npx). If you give a change id and SpecGate isn't installed, the run fails closed.
-- **mcpscan**: `require('@kurtfrancisco/mcpscan').checkToolDescription(tool)` runs on every worker tool. Its findings (`MCP0xx` rules) are merged with the built-in checks.
-- **agent-guard**: `require('@kurtfrancisco/agent-guard').evaluate({ tool: 'Bash', command, projectRoot })` runs before any CLI worker starts. A `deny` decision blocks the command, even when `allowDestructive` is true.
+`npm i -D @kurtfrancisco/janus @kurtfrancisco/argus @kurtfrancisco/talos`
+- **Janus of Agents** (formerly SpecGate): pass a change id (`coa_start_run { specgateChange }` or `coa run spec.md --specgate-change add-x`). The run is blocked unless `specgate validate <id>` and `specgate status <id>` both exit 0, meaning the spec is well formed and a human has signed it off. Called through its CLI (no shell, no npx). If you give a change id and SpecGate isn't installed, the run fails closed.
+- **Argus of MCP** (formerly mcpscan): `require('@kurtfrancisco/argus').checkToolDescription(tool)` runs on every worker tool. Its findings (`MCP0xx` rules) are merged with the built-in checks.
+- **Talos of Humans** (formerly agent-guard): `require('@kurtfrancisco/talos').evaluate({ tool: 'Bash', command, projectRoot })` runs before any CLI worker starts. A `deny` decision blocks the command, even when `allowDestructive` is true.
 
 Only these scoped names are loaded. Unscoped look-alikes are ignored.
 
@@ -78,3 +78,5 @@ Payment is handled by Stripe; your license key arrives by email.
 
 ## License
 MIT. Copyright (c) 2026 Ethan Rogers (original Codex on Crack) and Copyright (c) 2026 Kurt Francisco (this derivative). See [LICENSE](LICENSE). Pro content is sold separately and isn't covered by the MIT license.
+
+The old package names (`@kurtfrancisco/specgate`, `@kurtfrancisco/mcpscan`, `@kurtfrancisco/agent-guard`) are still detected if you already have them installed.

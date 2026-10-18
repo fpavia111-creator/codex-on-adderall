@@ -97,7 +97,7 @@ async function main() {
       const major = Number(process.versions.node.split('.')[0]);
       const has = n => { try { require.resolve(n); return 'installed'; } catch { return 'not installed (optional)'; } };
       let cfgMsg; try { const c = loadConfig(root); cfgMsg = `ok (${Object.entries(c.roles).map(([k, v]) => `${k}=${v.provider}`).join(', ')})`; } catch (e) { cfgMsg = e.message; process.exitCode = 1; }
-      out(`${NAME.DISPLAY_NAME} ${pkg.version}\n  node ${process.versions.node} ${major >= 18 ? 'ok' : 'TOO OLD (need 18+)'}\n  config: ${cfgMsg}\n  @kurtfrancisco/specgate: ${has('@kurtfrancisco/specgate')}\n  @kurtfrancisco/mcpscan: ${has('@kurtfrancisco/mcpscan')}\n  @kurtfrancisco/agent-guard: ${has('@kurtfrancisco/agent-guard')}`);
+      out(`${NAME.DISPLAY_NAME} ${pkg.version}\n  node ${process.versions.node} ${major >= 18 ? 'ok' : 'TOO OLD (need 18+)'}\n  config: ${cfgMsg}\n  @kurtfrancisco/janus (Janus of Agents): ${has('@kurtfrancisco/janus')}\n  @kurtfrancisco/argus (Argus of MCP): ${has('@kurtfrancisco/argus')}\n  @kurtfrancisco/talos (Talos of Humans): ${has('@kurtfrancisco/talos')}`);
       return;
     }
     case undefined: case 'help': case '-h': return out(HELP);
