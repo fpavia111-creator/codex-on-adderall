@@ -44,13 +44,18 @@ function builtinCheck(spec, { minScore = 70 } = {}) {
  */
 const path = require('path');
 const { spawnSync } = require('child_process');
-const PKG = '@kurtfrancisco/specgate';
+const PKGS = ['@kurtfrancisco/janus', '@kurtfrancisco/specgate']; // Janus of Agents (formerly SpecGate); old name still accepted
+const PKG = PKGS[0];
 
 function locateSpecgate(resolveFn = require.resolve) {
+  for (const PKG of PKGS) { const r = locateOne(PKG, resolveFn); if (r) return r; }
+  return null;
+}
+function locateOne(PKG, resolveFn) {
   try {
     const pj = resolveFn(`${PKG}/package.json`);
     const meta = JSON.parse(require('fs').readFileSync(pj, 'utf8'));
-    const bin = typeof meta.bin === 'string' ? meta.bin : (meta.bin && meta.bin.specgate);
+    const bin = typeof meta.bin === 'string' ? meta.bin : (meta.bin && (meta.bin.janus || meta.bin.specgate));
     if (!bin) return null;
     return { name: PKG, version: meta.version, bin: path.join(path.dirname(pj), bin) };
   } catch { return null; }
@@ -76,8 +81,8 @@ async function checkSpec(spec, cfg = {}, deps = {}) {
     return base;
   }
   if (!change) {
-    if (opts.external === 'required') return { ...base, pass: false, external: { engine: PKG, version: sg.version }, notes: [...base.notes, 'specGate.external=required: pass a SpecGate change id (specgateChange) so its sign-off can be checked.'] };
-    return { ...base, external: { engine: PKG, version: sg.version, used: false, note: 'installed; pass specgateChange to require its validation + human sign-off' } };
+    if (opts.external === 'required') return { ...base, pass: false, external: { engine: sg.name, version: sg.version }, notes: [...base.notes, 'specGate.external=required: pass a SpecGate change id (specgateChange) so its sign-off can be checked.'] };
+    return { ...base, external: { engine: sg.name, version: sg.version, used: false, note: 'installed; pass specgateChange to require its validation + human sign-off' } };
   }
   const root = cfg.projectRoot || process.cwd();
   const validate = runSpecgate(sg, ['validate', change], root, deps.specgateSpawn);
@@ -87,7 +92,7 @@ async function checkSpec(spec, cfg = {}, deps = {}) {
   if (validate.code !== 0) notes.push(`specgate validate ${change} failed: ${validate.out.split('\n').slice(0, 5).join(' | ')}`);
   if (status.code !== 0) notes.push(`specgate status ${change}: ${status.out.split('\n')[0]} (a human must run: specgate approve ${change})`);
   return { ...base, pass: base.pass && extPass, notes, engine: `builtin+${PKG}`,
-    external: { engine: PKG, version: sg.version, change, pass: extPass, validate: { exit: validate.code, output: validate.out }, status: { exit: status.code, output: status.out } } };
+    external: { engine: sg.name, version: sg.version, change, pass: extPass, validate: { exit: validate.code, output: validate.out }, status: { exit: status.code, output: status.out } } };
 }
 
 module.exports = { checkSpec, builtinCheck, acceptanceItems, loadExternal, locateSpecgate, runSpecgate };

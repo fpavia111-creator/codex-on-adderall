@@ -17,7 +17,7 @@ const DESTRUCTIVE = [
 function isDestructive(cmdline) { return DESTRUCTIVE.some(re => re.test(cmdline)); }
 
 function loadAgentGuard(requireFn = require) {
-  for (const name of ['@kurtfrancisco/agent-guard']) { // unscoped names are NOT trusted
+  for (const name of ['@kurtfrancisco/talos', '@kurtfrancisco/agent-guard']) { // unscoped names are NOT trusted
     try { const m = requireFn(name); if (m && typeof m.evaluate === 'function') return { name, mod: m }; } catch { /* absent */ }
   }
   return null;

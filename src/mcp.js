@@ -34,7 +34,7 @@ async function callTool(o, name, a = {}) {
       name: NAME.DISPLAY_NAME, version: pkg.version,
       roles: Object.fromEntries(Object.entries(o.cfg.roles).map(([k, v]) => [k, { provider: v.provider, model: v.model, command: v.command ? v.command[0] : undefined }])),
       budget: o.budget.summary(), safety: { allowDestructive: o.cfg.safety.allowDestructive, agentGuard: o.cfg.safety.agentGuard, allowedCommands: o.cfg.safety.allowedCommands },
-      integrations: { specgate: has('@kurtfrancisco/specgate'), mcpscan: has('@kurtfrancisco/mcpscan') || has('mcpscan'), agentGuard: has('@kurtfrancisco/agent-guard') },
+      integrations: { specgate: has('@kurtfrancisco/janus') || has('@kurtfrancisco/specgate'), mcpscan: has('@kurtfrancisco/argus') || has('@kurtfrancisco/mcpscan'), agentGuard: has('@kurtfrancisco/talos') || has('@kurtfrancisco/agent-guard') },
     };
     case P + 'spec_check': return checkSpec(a.spec, o.cfg, { change: a.specgateChange });
     case P + 'vet_tools': return vetTools(a.tools || [], o.cfg);

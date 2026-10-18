@@ -16,7 +16,7 @@ const RULES = [
 ];
 
 function loadMcpscan(requireFn = require) {
-  for (const name of ['@kurtfrancisco/mcpscan']) { // unscoped names are NOT trusted (different owners on npm)
+  for (const name of ['@kurtfrancisco/argus', '@kurtfrancisco/mcpscan']) { // unscoped names are NOT trusted (different owners on npm)
     try { const m = requireFn(name); if (m && typeof m.checkToolDescription === 'function') return { name, mod: m }; } catch { /* absent */ }
   }
   return null;
