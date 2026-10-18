@@ -73,5 +73,8 @@ Only these scoped names are loaded. Unscoped look-alikes are ignored.
 ## Pro ($11 launch price)
 Routing presets (host-only, Claude plans/host builds, Codex builds/Claude reviews, local Ollama, max-quality), a review checklist, an HTML cost dashboard (daily spend, by role/model, per run), and a one-command installer that registers the server with all three hosts (dry run by default, with backups). Set `COA_LICENSE_KEY` from your purchase email. Keys are verified offline.
 
+**[Buy codex-on-adderall Pro: $11 one-time →](https://buy.stripe.com/cNi8wRgqd6Fc5Gb0md5AQ05)**
+Payment is handled by Stripe; your license key arrives by email.
+
 ## License
 MIT. Copyright (c) 2026 Ethan Rogers (original Codex on Crack) and Copyright (c) 2026 Kurt Francisco (this derivative). See [LICENSE](LICENSE). Pro content is sold separately and isn't covered by the MIT license.
