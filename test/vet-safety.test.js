@@ -48,3 +48,11 @@ test('agent-guard deny is honoured; required without it blocks', () => {
   const c2 = { ...cfg, safety: { ...cfg.safety, agentGuard: 'required' } };
   assert.equal(checkCommand(['claude', '-p'], c2, { requireFn: noReq }).allowed, false);
 });
+
+test('renamed scanners: @kurtfrancisco/argus preferred, old @kurtfrancisco/mcpscan still accepted', () => {
+  const mk = name => ({ checkToolDescription: () => [{ rule: 'MCP001', severity: 'high', message: name }] });
+  const both = vetTools([{ name: 'a', description: 'ok' }], {}, { requireFn: n => { if (n === '@kurtfrancisco/argus' || n === '@kurtfrancisco/mcpscan') return mk(n); throw new Error('absent'); } });
+  assert.equal(both.scanner, '@kurtfrancisco/argus');
+  const old = vetTools([{ name: 'a', description: 'ok' }], {}, { requireFn: n => { if (n === '@kurtfrancisco/mcpscan') return mk(n); throw new Error('absent'); } });
+  assert.equal(old.scanner, '@kurtfrancisco/mcpscan');
+});
