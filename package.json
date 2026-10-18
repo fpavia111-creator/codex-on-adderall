@@ -1,6 +1,6 @@
 {
   "name": "@kurtfrancisco/codex-on-adderall",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Plan -> build -> review across models, as a zero-dependency MCP server for Claude Code, Cursor and Codex: spec gate before handoff, tool vetting, per-run and per-day cost/token hard stops, safe defaults, clear logs. Based on Codex on Crack by Ethan Rogers; not affiliated.",
   "license": "MIT",
   "author": "Kurt Francisco <Fpavia111@gmail.com>",
